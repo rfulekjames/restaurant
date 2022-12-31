@@ -5,7 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 
-import "./utils/firebase";
+import "./utils/server";
 
 import store from "./store/index";
 

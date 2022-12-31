@@ -1,4 +1,4 @@
-import { createTable, fetchTables, deleteTable } from "../utils/firebase";
+import { createTable, fetchTables, deleteTable } from "../utils/server";
 
 export const setTable = (tableToAdd) => {
   return async (dispatch) => {

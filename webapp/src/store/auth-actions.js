@@ -3,7 +3,7 @@ import {
   authenticateUser,
   logout,
   authenticateUserWithCustomToken,
-} from "../utils/firebase";
+} from "../utils/server";
 
 export const registerUserAndLogin = (userToRegister, history) => {
   return async (dispatch) => {

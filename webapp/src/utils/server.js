@@ -14,7 +14,7 @@ import { getAccessTokenFromSessionStorage, setAccessTokenInSessionStorage } from
 import { FetchedReservationsTypeEnum} from "./helper";
 
 const FETCH_REQUEST_TIMEOUT = 10000;
-const NEW_SERVER_URL = 'http://localhost:9000/firebase';
+const SERVER_URL = 'http://localhost:9000/firebase';
 const CREATE_USER_PATH = '/create-user';
 const CREATE_USERNAME_PATH = '/create-username';
 const LOGIN_PATH = '/login';
@@ -35,7 +35,7 @@ async function executeServerRequest(path, method, payload) {
     headers = { ...headers, 'Authorization': `Bearer ${accessToken}` };
   }
   const requestParams = payload ? { method, headers, body: JSON.stringify(payload) } : { method, headers };
-  return await fetchWithTimeout(NEW_SERVER_URL + path, requestParams, FETCH_REQUEST_TIMEOUT);
+  return await fetchWithTimeout(SERVER_URL + path, requestParams, FETCH_REQUEST_TIMEOUT);
 }
 
 async function fetchWithTimeout(url, requestParams, timeout) {

@@ -3,7 +3,7 @@ import {
   getReservationsForTable,
   fetchAllReservationsForDate,
   deleteReservation,
-} from "../utils/firebase";
+} from "../utils/server";
 
 export const setReservationAndUpdateReservations = (reservationData, reservationsType) => {
   return async (dispatch) => {
