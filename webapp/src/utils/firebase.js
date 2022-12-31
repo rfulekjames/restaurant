@@ -220,7 +220,6 @@ export const getReservationsForTable = async (
 };
 
 export const fetchAllReservationsForDate = async (
-  uid,
   restaurantName,
   date,
   dispatch

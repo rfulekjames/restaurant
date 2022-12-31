@@ -31,7 +31,6 @@ function ReservationReportingForm(props) {
 
     dispatch(
       getAllReservationsForDate(
-        props.userId,
         props.restaurantName,
         dateInputRef.current.value
       )

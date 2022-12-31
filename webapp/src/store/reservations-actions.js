@@ -1,7 +1,6 @@
 import {
   createReservation,
   getReservationsForTable,
-  fetchReservationsForDate,
   fetchAllReservationsForDate,
   deleteReservation,
 } from "../utils/firebase";
@@ -33,8 +32,8 @@ export const removeReservation = (reservationData) => {
   };
 };
 
-export const getAllReservationsForDate = (uid, restarantName, date) => {
+export const getAllReservationsForDate = (restarantName, date) => {
   return async (dispatch) => {
-    await fetchAllReservationsForDate(uid, restarantName, date, dispatch);
+    await fetchAllReservationsForDate(restarantName, date, dispatch);
   };
 };
