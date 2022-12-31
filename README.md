@@ -1,11 +1,3 @@
 ### About
 
-A restaurant reservation manager
-
-### Environment variables 
-
-The following variables for firebase are required to be set for the web server 
- `FIREBASE_API_KEY`
- `PROJECT_ID`
- `JWT_SECRET`
-
+A restaurant reservation manager with client built in [React.js](https://reactjs.org/) and server based on [Node.js](https://nodejs.org/) and [Firebase](https://firebase.google.com/).

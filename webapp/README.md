@@ -1,6 +1,8 @@
 # Restaurant Reservation System
 
-See a walkthrough [here](https://drive.google.com/file/d/1EmYKd7T1YurApm0G61DnCXG66_7o8lcL/view?usp=sharing).
+- To get started set `SERVER_URL` in `/src/utils/server.js` to the url of the server.
+
+- See a walkthrough [here](https://drive.google.com/file/d/1EmYKd7T1YurApm0G61DnCXG66_7o8lcL/view?usp=sharing).
 
 # Getting Started with Create React App
 
