@@ -12,6 +12,20 @@ const authEmulatorPort = 9099;
 const PORT = 9000
 const NEW_SERVER_URL = `http://localhost:${PORT}/firebase`;
 
+const httpHeaders = (token) => {
+  const basicHeaders = { 'Content-Type': 'application/json' }
+  if (token) {
+    return {
+      ...basicHeaders,
+      'Authorization': 'Bearer ' + token,
+    }
+  } else {
+    return {
+      ...basicHeaders,
+    }
+  }
+};
+
 async function clearDb() {
   const response = await fetch(
     `http://localhost:${firestoreEmulatorPort}/emulator/v1/projects/${configVariables.projectId}/databases/(default)/documents`,
@@ -75,9 +89,7 @@ describe('Firestore', function () {
   it('test create a user with a username', async function () {
     const createUser = async (email, password) => fetch(NEW_SERVER_URL + '/create-user', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: httpHeaders(),
       body: JSON.stringify({ email, password }),
     });
     let res = await createUser('test@user.org', 'holi');
@@ -89,10 +101,7 @@ describe('Firestore', function () {
 
     const createUsername = async (customAccessToken) => fetch(NEW_SERVER_URL + '/create-username', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + customAccessToken,
-      },
+      headers: httpHeaders(customAccessToken),
       body: JSON.stringify({ username: 'velkolepost' }),
     });
     res = await createUsername(accessToken + 'a');
@@ -102,10 +111,7 @@ describe('Firestore', function () {
 
     const getUsername = async (customAccessToken) => fetch(NEW_SERVER_URL + '/get-username', {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + customAccessToken,
-      },
+      headers: httpHeaders(customAccessToken),
     });
     res = await getUsername(accessToken + 'a');
     assert.equal(res.status, 401);
@@ -117,9 +123,7 @@ describe('Firestore', function () {
 
   const login = async (email, password) => fetch(NEW_SERVER_URL + '/login', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: httpHeaders(),
     body: JSON.stringify({ email, password }),
   });
 
@@ -135,27 +139,18 @@ describe('Firestore', function () {
 
   const createTable = async (restarantName, tableData) => fetch(`${NEW_SERVER_URL}/${restarantName}/create-table`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + accessToken,
-    },
+    headers: httpHeaders(accessToken),
     body: JSON.stringify(tableData),
   });
 
   const getTables = async (restarantName) => fetch(`${NEW_SERVER_URL}/${restarantName}/get-tables`, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + accessToken,
-    },
+    headers: httpHeaders(accessToken),
   });
 
   const deleteTable = async (restarantName, tableId) => fetch(`${NEW_SERVER_URL}/${restarantName}/delete-table`, {
     method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + accessToken,
-    },
+    headers: httpHeaders(accessToken),
     body: JSON.stringify({ tableId }),
   });
 
@@ -190,27 +185,18 @@ describe('Firestore', function () {
 
   const createReservation = async (restarantName, reservation) => fetch(`${NEW_SERVER_URL}/${restarantName}/create-reservation`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + accessToken,
-    },
+    headers: httpHeaders(accessToken),
     body: JSON.stringify(reservation),
   });
 
   const getReservationsForTable = async (restarantName, tableId) => fetch(`${NEW_SERVER_URL}/${restarantName}/${tableId}/get-reservations?ascDesc=asc`, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + accessToken,
-    }
+    headers: httpHeaders(accessToken),
   });
 
   const getReservationsForDate = async (restarantName, date) => fetch(`${NEW_SERVER_URL}/${restarantName}/get-reservations?date=${date}`, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + accessToken,
-    }
+    headers: httpHeaders(accessToken),
   });
 
   it('create a reservation at a table in a restaurant', async function () {
@@ -239,10 +225,7 @@ describe('Firestore', function () {
 
   const deleteReservation = async (restarantName, reservation) => fetch(`${NEW_SERVER_URL}/${restarantName}/delete-reservation`, {
     method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + accessToken,
-    },
+    headers: httpHeaders(accessToken),
     body: JSON.stringify(reservation),
   });
 
