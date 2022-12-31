@@ -11,15 +11,16 @@ import { collection, deleteDoc, doc, getDoc, getDocs, getFirestore, limit, order
 
 config();
 
-export const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY, 
+export const configVariables = {
+  apiKey: process.env.FIREBASE_API_KEY,
   projectId: process.env.PROJECT_ID,
+  jwtSecret: process.env.JWT_SECRET,
 };
 
 const MAX_NUM_OF_FETCHED_RESERVATIONS = 1000;
 
 export function initFirebase() {
-  initializeApp(firebaseConfig);
+  initializeApp(configVariables);
   const auth = getAuth();
   const db = getFirestore();
   return [db, auth];
@@ -188,14 +189,14 @@ export class ReservationRepository {
 
     const path = ReservationRepository.getFirestorePathForReservations(userId, restaurantName);
     const reservationsRef = collection(this.db, path);
-  
+
     const q = query(
       reservationsRef,
       where("date", "==", date),
       orderBy("tableId", "asc"),
       orderBy("time", "asc")
     );
-  
+
     const reservationsRaw = await getDocs(q);
     const reservations = [];
     reservationsRaw.forEach((reservationRaw) => {

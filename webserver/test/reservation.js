@@ -2,7 +2,7 @@ import assert from 'assert';
 import fetch from "node-fetch";
 
 import { startServer } from '../src/server.js';
-import { initFirebase, firebaseConfig } from "../src/reservation.js";
+import { initFirebase, configVariables } from "../src/reservation.js";
 
 import { connectAuthEmulator } from "firebase/auth";
 import { connectFirestoreEmulator } from "firebase/firestore";
@@ -14,7 +14,7 @@ const NEW_SERVER_URL = `http://localhost:${PORT}/firebase`;
 
 async function clearDb() {
   const response = await fetch(
-    `http://localhost:${firestoreEmulatorPort}/emulator/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents`,
+    `http://localhost:${firestoreEmulatorPort}/emulator/v1/projects/${configVariables.projectId}/databases/(default)/documents`,
     {
       method: 'DELETE',
     }
@@ -26,7 +26,7 @@ async function clearDb() {
 
 async function clearAuth() {
   const response = await fetch(
-    `http://localhost:${authEmulatorPort}/emulator/v1/projects/${firebaseConfig.projectId}/accounts`,
+    `http://localhost:${authEmulatorPort}/emulator/v1/projects/${configVariables.projectId}/accounts`,
     {
       method: 'DELETE',
     }
@@ -155,7 +155,7 @@ describe('Firestore', function () {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + accessToken,
-    },    
+    },
     body: JSON.stringify({ tableId }),
   });
 

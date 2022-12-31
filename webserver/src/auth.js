@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
-export const JWT_SECRET = Buffer.from('Zn8Q5tyZ/G1MHltc4F/gTkVJMlrbKiZt', 'base64');
+import { configVariables } from './reservation.js';
+export const JWT_SECRET = Buffer.from(configVariables.jwtSecret, 'base64');
 
 export function getAuthToken(userId, email, password) {
     if (email) {
