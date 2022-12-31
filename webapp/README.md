@@ -1,6 +1,6 @@
 # Restaurant Reservation System
 
-- To get started set `SERVER_URL` in `/src/utils/server.js` to the url of the server.
+- To get started run [webserver](https://github.com/rfulekjames/restaurant/tree/main/webserver) and set `SERVER_URL` in `/src/utils/server.js` to the url of the server.
 
 - See a walkthrough [here](https://drive.google.com/file/d/1EmYKd7T1YurApm0G61DnCXG66_7o8lcL/view?usp=sharing).
 
