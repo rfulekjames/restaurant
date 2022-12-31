@@ -33,7 +33,6 @@ export default function TableGrid(props) {
   const draggedTableData = useSelector((state) => state.ui.draggedTableData);
 
   const tablesData = getTablesData(tables);
-  const uid = props.userId;
   const restaurantName = props.restaurantName;
 
   const dragStartHandler = (event) => {

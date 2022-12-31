@@ -38,14 +38,12 @@ function TablesReservationManagerPage() {
         <TableGrid
           restaurantName={restaurantName}
           gridInfo={"Reservations for"}
-          userId={uid}
           onTableClick={showTableReservationsHandler}
         />
       </Route>
       <Route path={RESERVATION_MANAGEMENT_PATH + "/:tableId"}>
         <ReservationsEditor
           onListTypeChange={listTypeChangeHandler}
-          userId={uid}
           restaurantName={restaurantName}
         />
       </Route>

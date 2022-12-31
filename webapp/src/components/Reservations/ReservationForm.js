@@ -29,7 +29,7 @@ function ReservationForm(props) {
   );
   const reservationToEdit = useSelector((state) => state.ui.reservationToEdit);
 
-  const uid = props.userId;
+  
   const restaurantName = props.restaurantName;
 
   const getShownReservationData = () => {
@@ -51,7 +51,6 @@ function ReservationForm(props) {
       contactDetails: contactDetailsInputRef.current.value,
       customerName: customerNameInputRef.current.value,
       id: reservationToEdit ? reservationToEdit.id : newReservationId,
-      uid: uid,
       tableId: props.tableId,
       restaurantName: restaurantName,
     };
@@ -63,9 +62,7 @@ function ReservationForm(props) {
   const changeHandler = (event) => {
     //event.preventDefault();
     const trimmedTime =
-      timeInputRef.current.value.substring(0, 2) +
-      ":00" +
-      timeInputRef.current.value.substring(5);
+      timeInputRef.current.value;
     updateEnteredData({
       date: dateInputRef.current.value,
       time: trimmedTime,

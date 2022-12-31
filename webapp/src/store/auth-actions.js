@@ -2,7 +2,6 @@ import {
   createUser,
   authenticateUser,
   logout,
-  authenticateUserWithCustomToken,
 } from "../utils/server";
 
 export const registerUserAndLogin = (userToRegister, history) => {

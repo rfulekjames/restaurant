@@ -9,7 +9,8 @@ export function getToday() {
 export function getNow() {
   const now = new Date();
   const hours = String(now.getHours()).padStart(2, "0");
-  return hours + ":00";
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  return `${hours}:${minutes}`;
 }
 
 export function formatAMPM(time) {
