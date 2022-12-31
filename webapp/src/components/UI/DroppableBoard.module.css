@@ -1,0 +1,13 @@
+.filled {
+  background-color: #0c0a0a;
+  padding: 3px;
+}
+
+.free {
+  background-color: #f3e6e6;
+  padding: 3px;
+}
+
+.pointing {
+  cursor: pointer;
+}

@@ -1,0 +1,32 @@
+.card {
+  padding: 10px 0px;
+  text-align-last: center;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.shown {
+  color: #ffffff;
+  background-color: #222222;
+}
+
+.grabbable {
+  cursor: grab;
+}
+
+.pointing {
+  cursor: pointer;
+}
+
+
+
+
+.hidden {
+  background-color: #0c0a0a;
+  color: #0c0a0a;
+}
