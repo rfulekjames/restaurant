@@ -2,18 +2,6 @@
 
 See a walkthrough [here](https://drive.google.com/file/d/1EmYKd7T1YurApm0G61DnCXG66_7o8lcL/view?usp=sharing).
 
-Auth and Persistent thanks to Firebase.
-Set firebaseConfig in /src/utils/firebase.js 
-{   
-    apiKey
-    authDomain
-    databaseURL 
-    projectId
-    storageBucket
-    messagingSenderId
-    appId 
-}
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
