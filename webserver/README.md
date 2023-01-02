@@ -15,6 +15,8 @@ The following variables are required to be set for the web server
  
  ### Testing
  
- 0. Start firebase emulator by `firebase emulators:start` command.
+ 0. Start [firebase emulators](https://firebase.google.com/docs/emulator-suite) by `firebase emulators:start` command.
  
  1. Run `mocha test` from the root folder.
+
+Edit `firebase.json` to change the emulators settings.
