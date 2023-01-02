@@ -10,7 +10,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-In the project directory, you run to start the webapp in development mode:
+In the project directory, run the following commmands to start the webapp in development mode:
 
 ### `npm install`
 
