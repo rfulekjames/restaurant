@@ -17,7 +17,7 @@ The following variables are required to be set for the web server
  
  0. Install and configure [firebase emulators](https://firebase.google.com/docs/emulator-suite/install_and_configure). Only, *firestore* and *auth* emulators are needed.
 
- 1. Start [firebase emulators](https://firebase.google.com/docs/emulator-suite) by `firebase emulators:start` command.
+ 1. Start [firebase emulators](https://firebase.google.com/docs/emulator-suite) by `firebase emulators:start` command from the root folder.
  
  1. Run `mocha test --exit` from the root folder.
 
