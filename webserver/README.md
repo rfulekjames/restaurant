@@ -15,14 +15,7 @@ The following variables are required to be set for the web server
  
  ### Testing
  
- 0. Create `.firebaserc` file in the root folder with the firebase project name 
- ```
- {
-  "projects": {
-    "default": "PROJECT NAME"
-  }
-}
-```
+ 0. Run `firebase emulators:start` command.
  
  1. Start [firebase emulators](https://firebase.google.com/docs/emulator-suite) by `firebase emulators:start` command.
  
