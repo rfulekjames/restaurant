@@ -11,7 +11,7 @@ The following variables are required to be set for the web server
  `PROJECT_ID`
  `JWT_SECRET`
  
- The first two variables connect the [firebase](https://firebase.google.com/) with the webserver. 
+ The first two variables are required for making [firebase](https://firebase.google.com/) API calls. 
  
  ### Testing
  
