@@ -1,8 +1,12 @@
 ### Getting started
 
-0. Create a [firebase](https://firebase.google.com/) project
+0. Create a [firebase](https://firebase.google.com/) project.
 
-1. Set the environment variables listed below
+1. Set the *environment variables* listed below.
+
+2. Install [Node.js](https://nodejs.org/).
+
+3. Run `npm install` from the root folder.
 
 ### Environment variables 
 
