@@ -15,7 +15,7 @@ The following variables are required to be set for the web server
  
  ### Testing
  
- 0. Install and configure [firebase emulators](https://firebase.google.com/docs/emulator-suite/install_and_configure). Firestor and Auth emulators are needed.
+ 0. Install and configure [firebase emulators](https://firebase.google.com/docs/emulator-suite/install_and_configure). Only, *firestore* and *auth* emulators are needed.
 
  1. Start [firebase emulators](https://firebase.google.com/docs/emulator-suite) by `firebase emulators:start` command.
  
