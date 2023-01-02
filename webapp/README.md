@@ -1,7 +1,8 @@
 # Restaurant Reservation System
 
-To get started set `NEW_SERVER_URL` in `/src/utils/firebase.js`.
-See a walkthrough [here](https://drive.google.com/file/d/1EmYKd7T1YurApm0G61DnCXG66_7o8lcL/view?usp=sharing).
+- To get started set `NEW_SERVER_URL` in `/src/utils/firebase.js`.
+
+- See a walkthrough [here](https://drive.google.com/file/d/1EmYKd7T1YurApm0G61DnCXG66_7o8lcL/view?usp=sharing).
 
 # Getting Started with Create React App
 
