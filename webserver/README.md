@@ -9,7 +9,7 @@
 The following variables are required to be set for the web server 
  `FIREBASE_API_KEY`
  `PROJECT_ID`
- `JWT_SECRET`
+ `JWT_SECRET`.
  
  The first two variables  `FIREBASE_API_KEY` and `PROJECT_ID` are required for making [firebase](https://firebase.google.com/) API calls, and the third one `JWT_SECRET` is required for user authentication. 
  
