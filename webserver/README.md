@@ -15,8 +15,17 @@ The following variables are required to be set for the web server
  
  ### Testing
  
- 0. Start [firebase emulators](https://firebase.google.com/docs/emulator-suite) by `firebase emulators:start` command.
+ 0. Create `.firebaserc` file in the root folder with the firebase project name 
+ ```
+ {
+  "projects": {
+    "default": "PROJECT NAME"
+  }
+}
+```
  
- 1. Run `mocha test` from the root folder.
+ 1. Start [firebase emulators](https://firebase.google.com/docs/emulator-suite) by `firebase emulators:start` command.
+ 
+ 2. Run `mocha test` from the root folder.
 
 Edit [`firebase.json`](https://github.com/rfulekjames/restaurant/blob/main/webserver/firebase.json) to change the emulators settings.
