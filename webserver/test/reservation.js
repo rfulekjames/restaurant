@@ -2,15 +2,22 @@ import assert from 'assert';
 import fetch from "node-fetch";
 
 import { startServer } from '../src/server.js';
-import { initFirebase, configVariables } from "../src/reservation.js";
+import { firebaseConfigVariables, reservationRepository } from "../src/reservation.js";
+import { connectFirestoreEmulator } from "@firebase/firestore";
+import { connectAuthEmulator } from 'firebase/auth';
 
-import { connectAuthEmulator } from "firebase/auth";
-import { connectFirestoreEmulator } from "firebase/firestore";
-
-const firestoreEmulatorPort = 8080;
-const authEmulatorPort = 9099;
 const PORT = 9000
-const NEW_SERVER_URL = `http://localhost:${PORT}/firebase`;
+const SERVER_URL = `http://localhost:${PORT}/api`;
+
+export const firestoreEmulatorPort = 8080;
+export const authEmulatorPort = 9099;
+
+
+export const useTestRepository = () => {
+  connectFirestoreEmulator(reservationRepository.db, "localhost", firestoreEmulatorPort);
+  connectAuthEmulator(reservationRepository.auth, `http://localhost:${authEmulatorPort}`);
+}
+
 
 const httpHeaders = (token) => {
   const basicHeaders = { 'Content-Type': 'application/json' }
@@ -28,7 +35,7 @@ const httpHeaders = (token) => {
 
 async function clearDb() {
   const response = await fetch(
-    `http://localhost:${firestoreEmulatorPort}/emulator/v1/projects/${configVariables.projectId}/databases/(default)/documents`,
+    `http://localhost:${firestoreEmulatorPort}/emulator/v1/projects/${firebaseConfigVariables.projectId}/databases/(default)/documents`,
     {
       method: 'DELETE',
     }
@@ -40,7 +47,7 @@ async function clearDb() {
 
 async function clearAuth() {
   const response = await fetch(
-    `http://localhost:${authEmulatorPort}/emulator/v1/projects/${configVariables.projectId}/accounts`,
+    `http://localhost:${authEmulatorPort}/emulator/v1/projects/${firebaseConfigVariables.projectId}/accounts`,
     {
       method: 'DELETE',
     }
@@ -57,15 +64,12 @@ describe('Firestore', function () {
 
   // Called before all of the tests in this block.
   before(async function () {
-    const [db, auth] = initFirebase();
-
-    connectFirestoreEmulator(db, "localhost", firestoreEmulatorPort);
-    connectAuthEmulator(auth, `http://localhost:${authEmulatorPort}`);
+    useTestRepository();
+    server = startServer(PORT);
 
     await clearDb();
     await clearAuth();
 
-    server = startServer(db, auth, PORT);
     console.log("Started server!");
   });
 
@@ -87,7 +91,7 @@ describe('Firestore', function () {
   });
 
   it('test create a user with a username', async function () {
-    const createUser = async (email, password) => fetch(NEW_SERVER_URL + '/create-user', {
+    const createUser = async (email, password) => fetch(SERVER_URL + '/users/register', {
       method: 'POST',
       headers: httpHeaders(),
       body: JSON.stringify({ email, password }),
@@ -99,7 +103,7 @@ describe('Firestore', function () {
     credentials = await res.json();
     accessToken = credentials.accessToken;
 
-    const createUsername = async (customAccessToken) => fetch(NEW_SERVER_URL + '/create-username', {
+    const createUsername = async (customAccessToken) => fetch(SERVER_URL + '/users/username', {
       method: 'POST',
       headers: httpHeaders(customAccessToken),
       body: JSON.stringify({ username: 'velkolepost' }),
@@ -109,7 +113,7 @@ describe('Firestore', function () {
     res = await createUsername(accessToken);
     assert.equal(res.status, 200);
 
-    const getUsername = async (customAccessToken) => fetch(NEW_SERVER_URL + '/get-username', {
+    const getUsername = async (customAccessToken) => fetch(SERVER_URL + '/users/username', {
       method: 'GET',
       headers: httpHeaders(customAccessToken),
     });
@@ -121,7 +125,7 @@ describe('Firestore', function () {
     assert.equal(username, 'velkolepost');
   });
 
-  const login = async (email, password) => fetch(NEW_SERVER_URL + '/login', {
+  const login = async (email, password) => fetch(SERVER_URL + '/users/login', {
     method: 'POST',
     headers: httpHeaders(),
     body: JSON.stringify({ email, password }),
@@ -137,25 +141,25 @@ describe('Firestore', function () {
     assert.equal((await res.json()).userId, credentials.userId);
   });
 
-  const createTable = async (restarantName, tableData) => fetch(`${NEW_SERVER_URL}/${restarantName}/create-table`, {
+  const createTable = async (restarantName, tableData) => fetch(`${SERVER_URL}/restaurants/${restarantName}/tables`, {
     method: 'POST',
     headers: httpHeaders(accessToken),
     body: JSON.stringify(tableData),
   });
 
-  const getTables = async (restarantName) => fetch(`${NEW_SERVER_URL}/${restarantName}/get-tables`, {
+  const getTables = async (restarantName) => fetch(`${SERVER_URL}/restaurants/${restarantName}/tables`, {
     method: 'GET',
     headers: httpHeaders(accessToken),
   });
 
-  const deleteTable = async (restarantName, tableId) => fetch(`${NEW_SERVER_URL}/${restarantName}/delete-table`, {
+  const deleteTable = async (restarantName, tableId) => fetch(`${SERVER_URL}/restaurants/${restarantName}/tables`, {
     method: 'DELETE',
     headers: httpHeaders(accessToken),
     body: JSON.stringify({ tableId }),
   });
 
   it('create table in a restaurant', async function () {
-    let res = await createTable('Resting', { tableId: '1', size: 3, row: -1, column: 'string' });
+    let res = await createTable('Resting', { tableId: '1', size: 3, row: 10, column: 10 });
     assert.equal(res.status, 400);
     res = await createTable('Resting', { tableId: '1', size: 3, row: 0, column: 0 });
     assert.equal(res.status, 200);
@@ -183,18 +187,18 @@ describe('Firestore', function () {
     assert.equal(tables.length, 1);
   });
 
-  const createReservation = async (restarantName, reservation) => fetch(`${NEW_SERVER_URL}/${restarantName}/create-reservation`, {
+  const createReservation = async (restarantName, reservation) => fetch(`${SERVER_URL}/restaurants/${restarantName}/reservations`, {
     method: 'POST',
     headers: httpHeaders(accessToken),
     body: JSON.stringify(reservation),
   });
 
-  const getReservationsForTable = async (restarantName, tableId) => fetch(`${NEW_SERVER_URL}/${restarantName}/${tableId}/get-reservations?ascDesc=asc`, {
+  const getReservationsForTable = async (restarantName, tableId) => fetch(`${SERVER_URL}/restaurants/${restarantName}/reservations/${tableId}?ascDesc=asc`, {
     method: 'GET',
     headers: httpHeaders(accessToken),
   });
 
-  const getReservationsForDate = async (restarantName, date) => fetch(`${NEW_SERVER_URL}/${restarantName}/get-reservations?date=${date}`, {
+  const getReservationsForDate = async (restarantName, date) => fetch(`${SERVER_URL}/restaurants/${restarantName}/reservations?date=${date}`, {
     method: 'GET',
     headers: httpHeaders(accessToken),
   });
@@ -223,7 +227,7 @@ describe('Firestore', function () {
     assert.deepEqual(reservationsByTable.reservations[0][0], testReservation);
   });
 
-  const deleteReservation = async (restarantName, reservation) => fetch(`${NEW_SERVER_URL}/${restarantName}/delete-reservation`, {
+  const deleteReservation = async (restarantName, reservation) => fetch(`${SERVER_URL}/restaurants/${restarantName}/reservations`, {
     method: 'DELETE',
     headers: httpHeaders(accessToken),
     body: JSON.stringify(reservation),

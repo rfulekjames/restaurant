@@ -1,4 +1,3 @@
-import { config } from 'dotenv';
 import { initializeApp } from "firebase/app";
 
 import {
@@ -7,22 +6,37 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
-import { collection, deleteDoc, doc, getDoc, getDocs, getFirestore, limit, orderBy, query, setDoc, where, writeBatch } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  limit,
+  orderBy,
+  query,
+  setDoc,
+  where,
+  writeBatch
+} from "firebase/firestore";
+
+import { config } from 'dotenv';
 
 config();
 
-export const configVariables = {
+export const firebaseConfigVariables = {
   apiKey: process.env.FIREBASE_API_KEY,
   projectId: process.env.PROJECT_ID,
-  jwtSecret: process.env.JWT_SECRET,
 };
 
 const MAX_NUM_OF_FETCHED_RESERVATIONS = 1000;
 
 export function initFirebase() {
-  initializeApp(configVariables);
+  initializeApp(firebaseConfigVariables);
   const auth = getAuth();
   const db = getFirestore();
+
   return [db, auth];
 }
 
@@ -228,3 +242,5 @@ export class ReservationRepository {
     reservations.push(reservation);
   }
 }
+
+export const reservationRepository = new ReservationRepository(...initFirebase());

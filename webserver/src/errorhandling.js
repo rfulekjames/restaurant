@@ -1,5 +1,4 @@
 import { validationResult } from 'express-validator';
-import { param } from 'express-validator';
 
 export function setFirebaseErrorResponse(res, error) {
   if (error.customData?._tokenResponse) {
@@ -24,8 +23,4 @@ export function validateRequest(req, res) {
     return false;
   }
   return true;
-}
-
-export function restaurantNameValidator() {
-  return param('restaurantName').isLength({ min: 1, max: 256 });
 }
