@@ -14,17 +14,14 @@ import { getAccessTokenFromSessionStorage, setAccessTokenInSessionStorage } from
 import { FetchedReservationsTypeEnum} from "./helper";
 
 const FETCH_REQUEST_TIMEOUT = 10000;
-const SERVER_URL = 'http://localhost:9000/firebase';
-const CREATE_USER_PATH = '/create-user';
-const CREATE_USERNAME_PATH = '/create-username';
-const LOGIN_PATH = '/login';
-const GET_USERNAME_PATH = '/get-username';
-const GET_TABLES_PATH = '/get-tables';
-const CREATE_TABLE_PATH = '/create-table';
-const DELETE_TABLE_PATH = '/delete-table';
-const CREATE_RESERVATION_PATH = '/create-reservation';
-const DELETE_RESERVATION_PATH = '/delete-reservation';
-const GET_RESERVATIONS_PATH = '/get-reservations';
+const SERVER_URL = 'http://localhost:9000/api';
+const CREATE_USER_PATH = '/users/register';
+const USERNAME_PATH = '/users/username';
+const LOGIN_PATH = '/users/login';
+const RESTAURANTS_PATH = '/restaurants';
+const reservationsUrl = (restaurantName) => `${RESTAURANTS_PATH}/${restaurantName}/reservations`;
+const tablesUrl = (restaurantName) => `${RESTAURANTS_PATH}/${restaurantName}/tables`;
+
 
 async function executeServerRequest(path, method, payload) {
   var headers = {
@@ -65,7 +62,7 @@ export const createUser = async (userToCreate, history, dispatch) => {
   }
 
   try {
-    await executeServerRequest(CREATE_USERNAME_PATH, 'POST', { username: userToCreate.username });
+    await executeServerRequest(USERNAME_PATH, 'POST', { username: userToCreate.username });
     setAccessTokenInSessionStorage(null);
   } catch (error) {
     showErrorNotification(
@@ -100,7 +97,7 @@ export const authenticateUser = async (userToAuth, dispatch) => {
 export const fetchTables = async (restaurantName, dispatch) => {
   showPendingNotification(dispatch, "Getting tables!");
   try {
-    const { tables } = await executeServerRequest(`/${restaurantName}${GET_TABLES_PATH}`, 'GET');
+    const { tables } = await executeServerRequest(tablesUrl(restaurantName), 'GET');
     dispatch(tablesActions.setTables(tables));
     showSuccessNotification(dispatch, "Tables fetched successfully!");
   } catch (error) {
@@ -114,7 +111,7 @@ export const fetchTables = async (restaurantName, dispatch) => {
 export const createTable = async (tableToCreate, dispatch) => {
   showPendingNotification(dispatch, "Sending table data!");
   try {
-    await executeServerRequest(`/${tableToCreate.restaurantName}${CREATE_TABLE_PATH}`, 'POST', {
+    await executeServerRequest(tablesUrl(tableToCreate.restaurantName), 'POST', {
       column: tableToCreate.column,
       row: tableToCreate.row,
       size: tableToCreate.size,
@@ -133,7 +130,7 @@ export const createTable = async (tableToCreate, dispatch) => {
 export const deleteTable = async (tableToDelete, dispatch) => {
   showPendingNotification(dispatch, "Sending table data!");
   try {
-    await executeServerRequest(`/${tableToDelete.restaurantName}${DELETE_TABLE_PATH}`, 'DELETE', {
+    await executeServerRequest(tablesUrl(tableToDelete.restaurantName), 'DELETE', {
       tableId: tableToDelete.id,
     });
     dispatch(tablesActions.deleteTable(tableToDelete.id));
@@ -174,7 +171,7 @@ export const createReservation = async (
       id: reservationData.id,
       tableId: reservationData.tableId,
     };
-    await executeServerRequest(`/${reservationData.restaurantName}${CREATE_RESERVATION_PATH}`, 'POST', reservation);
+    await executeServerRequest(reservationsUrl(reservationData.restaurantName), 'POST', reservation);
     dispatch(
       reservationsActions.updateTableReservations({
         reservation,
@@ -203,7 +200,7 @@ export const getReservationsForTable = async (
   try {
     const ascDesc =
       reservationsType === FetchedReservationsTypeEnum.FUTURE ? "asc" : "desc";
-    const { reservations } = await executeServerRequest(`/${restaurantName}/${tableId}${GET_RESERVATIONS_PATH}?ascDesc=${ascDesc}`, 'GET');
+    const { reservations } = await executeServerRequest(`${reservationsUrl(restaurantName)}/${tableId}?ascDesc=${ascDesc}`, 'GET');
     dispatch(
       reservationsActions.setTableReservations({
         reservations,
@@ -226,7 +223,7 @@ export const fetchAllReservationsForDate = async (
 ) => {
   showPendingNotification(dispatch, "Getting reservations!");
   try {
-    const { reservations } = await executeServerRequest(`/${restaurantName}${GET_RESERVATIONS_PATH}?date=${date}`, 'GET');
+    const { reservations } = await executeServerRequest(`${reservationsUrl(restaurantName)}?date=${date}`, 'GET');
     dispatch(
       reservationsActions.setReservationsReporting(reservations)
     );
@@ -242,7 +239,7 @@ export const fetchAllReservationsForDate = async (
 export const deleteReservation = async (reservationToDelete, dispatch) => {
   showPendingNotification(dispatch, "Sending reservation data!");
   try {
-    await executeServerRequest(`/${reservationToDelete.restaurantName}${DELETE_RESERVATION_PATH}`,
+    await executeServerRequest(reservationsUrl(reservationToDelete.restaurantName),
       'DELETE', { reservationId: reservationToDelete.id, tableId: reservationToDelete.tableId });
     dispatch(
       reservationsActions.deleteReservation(reservationToDelete.id)
@@ -266,7 +263,7 @@ async function fetchUsernameIfNeededAndUpdateAuthState(
 ) {
   if (!userToAuth.username) {
     try {
-      const { username } = await executeServerRequest(GET_USERNAME_PATH, 'GET');
+      const { username } = await executeServerRequest(USERNAME_PATH, 'GET');
       dispatch(authActions.loginUser({
         username,
         uid: userId,
