@@ -1,5 +1,6 @@
 import {
   createUser,
+  initUser,
   authenticateUser,
   logout,
 } from "../utils/server";
@@ -7,6 +8,12 @@ import {
 export const registerUserAndLogin = (userToRegister, history) => {
   return async (dispatch) => {
     await createUser(userToRegister, history, dispatch);
+  };
+};
+
+export const initUserAndShowNextPage = (userToInit, history) => {
+  return async (dispatch) => {
+    await initUser(userToInit, history, dispatch);
   };
 };
 

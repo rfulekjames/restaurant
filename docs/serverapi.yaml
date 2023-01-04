@@ -91,6 +91,35 @@ components:
           example: 100
 
 paths:
+  /users/init-registration:
+    post:
+      tags: [ Signup ]
+      summary: Init user registration
+      operationId: initUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+                - password
+                - username
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                username:
+                  type: string
+      responses:
+        '200':
+          description: An email to confirm registration sent
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
   /users/register:
     post:
       tags: [ Signup ]
@@ -103,10 +132,13 @@ paths:
               required:
                 - email
                 - password
+                - key
               properties:
                 email:
                   type: string
                 password:
+                  type: string
+                key:
                   type: string
       responses:
         '200':

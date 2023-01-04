@@ -1,9 +1,8 @@
 import { useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { registerUserAndLogin } from "../../store/auth-actions";
+import { initUserAndShowNextPage } from "../../store/auth-actions";
 import { showErrorNotification } from "../../utils/notifications";
-
 export const MIN_PASSWORD_LENGTH = 7;
 export const MIN_USERNAME_LENGTH = 2;
 export const MAX_INPUT_LENGTH = 50;
@@ -41,7 +40,7 @@ function RegistrationForm() {
       password: enteredPassword,
       username: enteredName,
     };
-    dispatch(registerUserAndLogin(newUser, history));
+    dispatch(initUserAndShowNextPage(newUser, history));
   };
   return (
     <form className="form-signin" onSubmit={registrationHandler}>
