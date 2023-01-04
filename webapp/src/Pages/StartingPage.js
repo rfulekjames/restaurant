@@ -14,7 +14,7 @@ function StartingPage(props) {
 
   const username = query.get("username");
   if (username) {
-    history.push("/");
+    history.push('/');
     dispatch(registerUserAndLogin({
       username,
       email: query.get("email"),

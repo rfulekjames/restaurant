@@ -1,5 +1,8 @@
 import { initializeApp } from "firebase/app";
 
+import { connectFirestoreEmulator } from "@firebase/firestore";
+import { connectAuthEmulator } from 'firebase/auth';
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -35,6 +38,9 @@ const getActionCodeSettings = (username, email, password) => {
 
 import { config } from 'dotenv';
 
+export const firestoreEmulatorPort = 8080;
+export const authEmulatorPort = 9099;
+
 config();
 
 export const firebaseConfigVariables = {
@@ -48,6 +54,9 @@ export function initFirebase() {
   initializeApp(firebaseConfigVariables);
   const auth = getAuth();
   const db = getFirestore();
+
+  // connectFirestoreEmulator(db, "localhost", firestoreEmulatorPort);
+  // connectAuthEmulator(auth, `http://localhost:${authEmulatorPort}`);
 
   return [db, auth];
 }

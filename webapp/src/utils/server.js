@@ -90,7 +90,7 @@ export const createUser = async (userToCreate, history, dispatch) => {
   }
 
   await authenticateUser(userToCreate, dispatch);
-  history.push(AUTO_LOGIN_PATH);
+  // history.push(AUTO_LOGIN_PATH);
 };
 
 export const authenticateUser = async (userToAuth, dispatch) => {
@@ -295,7 +295,7 @@ async function fetchUsernameIfNeededAndUpdateAuthState(
       return false;
     }
   } else {
-    dispatch(authActions.loginUser({ ...userToAuth, userId }));
+    dispatch(authActions.loginUser({ ...userToAuth, uid: userId }));
   }
   return true;
 }
