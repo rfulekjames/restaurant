@@ -1,9 +1,13 @@
 import { initializeApp } from "firebase/app";
 
+import { connectFirestoreEmulator } from "@firebase/firestore";
+import { connectAuthEmulator } from 'firebase/auth';
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  sendSignInLinkToEmail,
 } from "firebase/auth";
 
 import {
@@ -21,7 +25,21 @@ import {
   writeBatch
 } from "firebase/firestore";
 
+const getActionCodeSettings = (username, email, password) => {
+  const actionCodeSettings =  {
+    // URL you want to redirect back to. The domain (www.example.com) for this
+    // URL must be in the authorized domains list in the Firebase Console.
+    url: `http://localhost:3000?username=${username}&email=${email}&password=${password}`,
+    // This must be true.
+    handleCodeInApp: true,
+  };
+  return actionCodeSettings;
+}
+
 import { config } from 'dotenv';
+
+export const firestoreEmulatorPort = 8080;
+export const authEmulatorPort = 9099;
 
 config();
 
@@ -37,6 +55,9 @@ export function initFirebase() {
   const auth = getAuth();
   const db = getFirestore();
 
+  // connectFirestoreEmulator(db, "localhost", firestoreEmulatorPort);
+  // connectAuthEmulator(auth, `http://localhost:${authEmulatorPort}`);
+
   return [db, auth];
 }
 
@@ -45,6 +66,11 @@ export class ReservationRepository {
   constructor(db, auth) {
     this.db = db;
     this.auth = auth;
+  }
+
+  async initUser(username, email, password) {
+    await sendSignInLinkToEmail(this.auth, email, getActionCodeSettings(username, email, password));
+  
   }
 
   async createUser(email, password) {

@@ -7,7 +7,7 @@ import {
 import { reservationsActions } from "../store/reservations-slice";
 import { authActions } from "../store/auth-slice";
 import { tablesActions } from "../store/tables-slice";
-import { AUTO_LOGIN_PATH } from "../components/Layout/Navigation";
+import { AUTO_LOGIN_PATH, EMAIL_CONFIRMATION_PATH } from "../components/Layout/Navigation";
 
 
 import { getAccessTokenFromSessionStorage, setAccessTokenInSessionStorage } from "./window-methods";
@@ -15,6 +15,7 @@ import { FetchedReservationsTypeEnum} from "./helper";
 
 const FETCH_REQUEST_TIMEOUT = 10000;
 const SERVER_URL = 'http://localhost:9000/api';
+const INIT_USER_PATH = '/users/init-registration';
 const CREATE_USER_PATH = '/users/register';
 const USERNAME_PATH = '/users/username';
 const LOGIN_PATH = '/users/login';
@@ -48,6 +49,22 @@ async function fetchWithTimeout(url, requestParams, timeout) {
   return await res.json();
 }
 
+
+export const initUser = async (userToCreate, history, dispatch) => {
+  showPendingNotification(dispatch, "Sending user data!");
+  try {
+    await executeServerRequest(INIT_USER_PATH, 'POST', userToCreate);
+    showSuccessNotification(dispatch, "User registration was initiated.");
+    history.push(EMAIL_CONFIRMATION_PATH);
+  } catch (error) {
+    showErrorNotification(
+      dispatch,
+      errorMessage("Error with user registration!", error.message),
+    );
+  }
+};
+
+
 export const createUser = async (userToCreate, history, dispatch) => {
   showPendingNotification(dispatch, "Sending user data!");
   try {
@@ -73,7 +90,7 @@ export const createUser = async (userToCreate, history, dispatch) => {
   }
 
   await authenticateUser(userToCreate, dispatch);
-  history.push(AUTO_LOGIN_PATH);
+  // history.push(AUTO_LOGIN_PATH);
 };
 
 export const authenticateUser = async (userToAuth, dispatch) => {
@@ -278,7 +295,7 @@ async function fetchUsernameIfNeededAndUpdateAuthState(
       return false;
     }
   } else {
-    dispatch(authActions.loginUser({ ...userToAuth, userId }));
+    dispatch(authActions.loginUser({ ...userToAuth, uid: userId }));
   }
   return true;
 }

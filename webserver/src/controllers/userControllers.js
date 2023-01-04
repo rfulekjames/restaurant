@@ -3,6 +3,17 @@ import { getAuthToken, getUserId } from "../auth.js";
 import { reservationRepository } from '../reservation.js';
 
 
+export const initUser = async (req, res) => {
+  if (!validateRequest(req, res)) return;
+  const { username, email, password } = req.body;
+  try {
+    await reservationRepository.initUser(username, email, password);
+    res.json({});
+  } catch (error) {
+    setFirebaseErrorResponse(res, error);
+  }
+}
+
 export const createUser = async (req, res) => {
   if (!validateRequest(req, res)) return;
   const { email, password } = req.body;

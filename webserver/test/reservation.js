@@ -94,7 +94,7 @@ describe('Firestore', function () {
     const createUser = async (email, password) => fetch(SERVER_URL + '/users/register', {
       method: 'POST',
       headers: httpHeaders(),
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, key: process.env.FIREBASE_API_KEY }),
     });
     let res = await createUser('test@user.org', 'holi');
     assert.equal(res.status, 400);

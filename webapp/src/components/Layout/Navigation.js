@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import ActivatedLiLink from "../UI/ActivatedLiLink";
 
 export const LAYOUT_EDITOR_PATH = "/layouteditor";
+export const EMAIL_CONFIRMATION_PATH = "/emailconfirmation";
 export const HOME_PATH = "/";
 export const RESERVATION_MANAGEMENT_PATH = "/reservationmanager";
 export const RESERVATION_REPORTING_PATH = "/reservationreporting";

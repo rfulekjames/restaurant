@@ -3,6 +3,7 @@ import TablesLayoutEditorPage from "./Pages/TablesLayoutEditorPage";
 import ReservationManagerPage from "./Pages/ReservationManagerPage";
 import RegistrationPage from "./Pages/RegistrationPage";
 import ReservationReportingPage from "./Pages/ReservationsReportingPage";
+import EmailConfirmationPage from "./Pages/EmailConfirmationPage";
 import Layout from "./components/Layout/Layout";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Notification from "./components/UI/Notification";
@@ -15,6 +16,7 @@ import {
   AUTO_LOGIN_PATH,
   RESERVATION_MANAGEMENT_PATH,
   RESERVATION_REPORTING_PATH,
+  EMAIL_CONFIRMATION_PATH,
 } from "./components/Layout/Navigation";
 
 //const SUCCESS_NOTIFICATION_TIMEOUT = 100;
@@ -65,6 +67,9 @@ function App() {
         </Route>
         <Route path={RESERVATION_REPORTING_PATH}>
           <ReservationReportingPage />
+        </Route>
+        <Route path={EMAIL_CONFIRMATION_PATH}>
+          <EmailConfirmationPage />
         </Route>
         <Route path="*">
           <Redirect to="/" />
