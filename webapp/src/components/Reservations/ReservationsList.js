@@ -6,14 +6,14 @@ import {
   FetchedReservationsTypeEnum,
   formatAMPM,
   formatUSDate,
-  getNow,
+  getNowString,
   getToday,
 } from "../../utils/helper";
 
 function ReservationsList(props) {
   const dispatch = useDispatch();
   const reservations = props.reservations;
-  const now = getNow();
+  const now = getNowString();
   const today = getToday();
 
   const updateHandler = (event, reservation) => {

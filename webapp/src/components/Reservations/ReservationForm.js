@@ -6,12 +6,12 @@ import { uiActions } from "../../store/ui-slice";
 import { useRef } from "react";
 import { RESERVATION_MANAGEMENT_PATH } from "../Layout/Navigation";
 import { useHistory } from "react-router-dom";
-import { getToday, getNow } from "../../utils/helper";
+import { extractHoursFromTimeString, extractAmPmFromTimeString, getTimeStringFromAmPmHours, getToday, getNowString, getHoursString } from "../../utils/helper";
 import { showErrorNotification } from "../../utils/notifications";
 
 const DEFAULT_DATA = {
   date: getToday(),
-  time: getNow(),
+  time: getNowString(),
   customerName: "",
   contactDetails: "",
 };
@@ -21,7 +21,8 @@ function ReservationForm(props) {
   const history = useHistory();
   const dispatch = useDispatch();
   const dateInputRef = useRef();
-  const timeInputRef = useRef();
+  const hoursInputRef = useRef();
+  const amPmInputRef = useRef();
   const customerNameInputRef = useRef();
   const contactDetailsInputRef = useRef();
   const newReservationId = useSelector(
@@ -29,7 +30,7 @@ function ReservationForm(props) {
   );
   const reservationToEdit = useSelector((state) => state.ui.reservationToEdit);
 
-  
+
   const restaurantName = props.restaurantName;
 
   const getShownReservationData = () => {
@@ -47,7 +48,7 @@ function ReservationForm(props) {
   const getEnteredReservationData = () => {
     const enteredReservationData = {
       date: dateInputRef.current.value,
-      time: timeInputRef.current.value,
+      time: getTimeStringFromAmPmHours(hoursInputRef.current.value, amPmInputRef.current.value),
       contactDetails: contactDetailsInputRef.current.value,
       customerName: customerNameInputRef.current.value,
       id: reservationToEdit ? reservationToEdit.id : newReservationId,
@@ -62,7 +63,7 @@ function ReservationForm(props) {
   const changeHandler = (event) => {
     //event.preventDefault();
     const trimmedTime =
-      timeInputRef.current.value;
+      getTimeStringFromAmPmHours(hoursInputRef.current.value, amPmInputRef.current.value);
     updateEnteredData({
       date: dateInputRef.current.value,
       time: trimmedTime,
@@ -143,15 +144,16 @@ function ReservationForm(props) {
               </td>
               <td>
                 Time:
-                <input
-                  ref={timeInputRef}
-                  inputMode="text"
-                  type="time"
-                  value={shownData.time}
-                  className="form-control"
-                  onChange={changeHandler}
-                  required
-                ></input>
+                <select  className="form-control" ref={hoursInputRef} name="cars" id="hours" value={extractHoursFromTimeString(shownData.time)} onChange={changeHandler}>
+                  {[...Array(12).keys()].map((hour) => (<option value={getHoursString(hour + 1)}>{getHoursString(hour + 1)}:00</option>))}
+                </select>
+                </td>
+                <td>
+                &nbsp;
+                <select  className="form-control" ref={amPmInputRef} name="amPm" id="amPm" value={extractAmPmFromTimeString(shownData.time)} onChange={changeHandler}>
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </select>
               </td>
               <td>
                 Customer Name:
@@ -170,7 +172,7 @@ function ReservationForm(props) {
               </td>
             </tr>
             <tr>
-              <td colSpan="3">
+              <td colSpan="4">
                 Contact Details:
                 <input
                   ref={contactDetailsInputRef}
