@@ -3,7 +3,7 @@ info:
   title: Restaurant Reservation Manager API
   version: 0.0.1
 servers:
-  - url: 'http://localhost:9000/firebase'
+  - url: 'http://localhost:9000/api'
     description: local
 components:
   responses:
@@ -13,6 +13,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorSchema'
+  parameters:
+    RestaurantName:
+      in: path
+      name: restaurantName
+      required: true
+      schema:
+        type: string
   schemas:
     ErrorSchema:
       required:
@@ -20,13 +27,132 @@ components:
       properties:
         errorCode:
           type: string
+    TableSchema:
+      required:
+        - size
+        - row
+        - column
+        - tableId
+      properties:
+        size:
+          type: integer
+          minimum: 1
+          maximum: 99
+          example: 4
+        row:
+          type: integer
+          minimum: 0
+          maximum: 9
+          example: 2
+        column:
+          type: integer
+          minimum: 0
+          maximum: 14
+          example: 5
+        tableId:
+          type: integer
+          minimum: 1
+          maximum: 150
+          example: 100
 
 paths:
-  /create-user:
+  /users/register:
     post:
       tags: [ Signup ]
       summary: Create user
       operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                required:
+                  - userId
+                  - accessToken
+                properties:
+                  userId:
+                    type: string 
+                    example: qslYszIU3hGkXhnBA042xRHplYd3
+                  accessToken:
+                    type: string
+                    example: >
+                      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJxc2xZc3pJVTNoR2tYaG5CQTA0M
+                      nhSSHBsWWQzIiwiZW1haWwiOiJ0ZXN0QHVzZXIub3JnIiwicGFzc3dvcmQiOiJwYXNzY29ycmV
+                      jdCIsImlhdCI6MTY3MjQ5ODIzOH0
+
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+  /users/username:
+    post:
+      tags: [ Signup ]
+      summary: Create username
+      operationId: createUsername
+      security:
+        - bearerAuth: [ user ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - username
+              properties:
+                username:
+                  type: string
+      responses:
+        '200':
+          description: Username Created
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+    get:
+      tags: [ Signup ]
+      summary: Get username
+      operationId: getUsername
+      security:
+        - bearerAuth: [ user ]
+      responses:
+        '200':
+          description: Username 
+          content:
+            application/json:
+              schema:
+                required:
+                  - username
+                properties:
+                  resubmit:
+                    type: string 
+                    example: newuser
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+  /users/login:
+    post:
+      tags: [ Login ]
+      summary: Login user
+      operationId: login
       requestBody:
         content:
           application/json:
@@ -43,7 +169,7 @@ paths:
                   example: passcorrect
       responses:
         '200':
-          description: User Created
+          description: User logged in
           content:
             application/json:
               schema:
@@ -51,16 +177,93 @@ paths:
                   - userId
                   - accessToken
                 properties:
-                  resubmit:
+                  userId:
                     type: string 
                     example: qslYszIU3hGkXhnBA042xRHplYd3
-                  errorMessage:
+                  accessToken:
                     type: string
                     example: >
                       eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJxc2xZc3pJVTNoR2tYaG5CQTA0M
                       nhSSHBsWWQzIiwiZW1haWwiOiJ0ZXN0QHVzZXIub3JnIiwicGFzc3dvcmQiOiJwYXNzY29ycmV
-                      jdCIsImlhdCI6MTY3MjQ5ODIzOH0
-
+                      jdCIsImlhdCI6MTY3MjQ5ODIzOH0  
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+  /restaurants/{restaurantName}/tables:
+    post:
+      tags: [ Tables ]
+      summary: Create table
+      operationId: createTable
+      security:
+        - bearerAuth: [ user ]
+      parameters:
+        - $ref: '#/components/parameters/RestaurantName'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TableSchema'
+      responses:                       
+        '200':
+          description: Table created
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+    get:
+      tags: [ Tables ]
+      summary: Get tables in a restaurant
+      operationId: getTables
+      security:
+        - bearerAuth: [ user ]
+      parameters:
+        - $ref: '#/components/parameters/RestaurantName'
+      responses:      
+        '200':
+          description: Tables
+          content:
+            application/json:
+              schema:
+                required:
+                  - tables
+                properties:
+                  tables:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TableSchema'  
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+    delete:
+      tags: [ Tables ]
+      summary: Delete a table in a restaurant with all the reservations
+      operationId: deleteTable
+      security:
+        - bearerAuth: [ user ]
+      parameters:
+        - $ref: '#/components/parameters/RestaurantName'  
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - tableId
+              properties:
+                tableId:
+                  type: integer
+                  minimum: 1
+                  maximum: 150
+      responses:      
+        '200':
+          description: Table deleted
         '400':
           $ref: '#/components/responses/Error'
         '401':

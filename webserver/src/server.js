@@ -1,4 +1,3 @@
-
 import cors from 'cors';
 import express from 'express';
 import { expressjwt } from 'express-jwt';
@@ -8,7 +7,7 @@ import { userRouter } from './routes/userRoutes.js';
 
 export function startServer(port) {
 
-  const PORT = port ? port : 9000;
+  const PORT = port || 9000;
 
   const app = express();
 
@@ -23,6 +22,6 @@ export function startServer(port) {
 
   return app.listen({ port: PORT }, () => {
     console.log(`Server running on port ${PORT}`);
-    console.log(`Firebase endpoint: http://localhost:${PORT}/firebase`);
+    console.log(`Api endpoint: hostname:${PORT}/api`);
   });
 }

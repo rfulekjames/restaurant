@@ -4,10 +4,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@openapitools/openapi-generator-cli": "^2.5.2",
     "@reduxjs/toolkit": "^1.6.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "install": "^0.13.0",
+    "npm": "^9.2.0",
     "react": "^17.0.2",
     "react-confirm-alert": "^2.7.0",
     "react-dom": "^17.0.2",
@@ -22,7 +25,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "api": "openapi-generator-cli generate -i ../docs/serverapi.yaml -g javascript -o src/generated-sources/openapi"
   },
   "eslintConfig": {
     "extends": [

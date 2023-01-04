@@ -46,7 +46,7 @@ function restaurantNameValidator() {
 }
 
 function tableIdValidator(parameter) {
-  return intRangeValidator(parameter, 1, 149, 'Table Id must be positive and smaller than 150');
+  return intRangeValidator(parameter, 1, 150, 'Table Id must be positive and smaller than 151');
 }
 
 function intRangeValidator(parameter, min, max, message) {
