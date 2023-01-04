@@ -19,7 +19,15 @@ components:
       name: restaurantName
       required: true
       schema:
-        type: string
+        type: string        
+    TableId:
+      in: path
+      name: tableId
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 150
   schemas:
     ErrorSchema:
       required:
@@ -27,6 +35,33 @@ components:
       properties:
         errorCode:
           type: string
+    ReservationSchema:
+      required:
+        - contactDetails
+        - customerName
+        - date
+        - time
+        - id
+        - tableId
+      properties:
+        contactDetails:
+          type: string
+        customerName:
+          type: string
+        date:
+          type: string
+          format: date
+        time:
+          type: string
+          format: time
+        id:
+          type: integer
+        tableId:
+          type: integer
+          minimum: 1
+          maximum: 150
+          example: 100
+
     TableSchema:
       required:
         - size
@@ -225,7 +260,7 @@ paths:
         - $ref: '#/components/parameters/RestaurantName'
       responses:      
         '200':
-          description: Tables
+          description: Tables in a restaurant
           content:
             application/json:
               schema:
@@ -264,6 +299,131 @@ paths:
       responses:      
         '200':
           description: Table deleted
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+
+
+  /restaurants/{restaurantName}/reservations:
+    post:
+      tags: [ Reservations ]
+      summary: Create reservation
+      operationId: createReservation
+      security:
+        - bearerAuth: [ user ]
+      parameters:
+        - $ref: '#/components/parameters/RestaurantName'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReservationSchema'
+      responses:                       
+        '200':
+          description: Reservation created
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+    get:
+      tags: [ Reservations ]
+      summary: Get reservations in a restaurant for a given date
+      operationId: getDateReservations
+      security:
+        - bearerAuth: [ user ]
+      parameters:
+        - $ref: '#/components/parameters/RestaurantName'
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:      
+        '200':
+          description: Reservations for a given date grouped by tables (hence, a 2-dim array is returned)
+          content:
+            application/json:
+              schema:
+                required:
+                  - reservations
+                properties:
+                  reservations:
+                    type: array
+                    items:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/ReservationSchema'  
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+    delete:
+      tags: [ Reservations ]
+      summary: Delete a reservation  a restaurant
+      operationId: deleteReservation
+      parameters:
+        - $ref: '#/components/parameters/RestaurantName'
+      security:
+        - bearerAuth: [ user ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - reservationId
+                - tableId
+              properties:
+                tableId:
+                  type: integer
+                  minimum: 1
+                  maximum: 150
+                reservationId:
+                  type: integer
+      responses:      
+        '200':
+          description: Reservation deleted
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+
+  /restaurants/{restaurantName}/tables/{tableId}:
+    get:
+      tags: [ Reservations ]
+      summary: Get reservations in a restaurant for a given table
+      operationId: getTableReservations
+      security:
+        - bearerAuth: [ user ]
+      parameters:
+        - $ref: '#/components/parameters/RestaurantName'
+        - $ref: '#/components/parameters/TableId'
+        - name: ascDesc
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:      
+        '200':
+          description: Reservations for a table in a restaurant
+          content:
+            application/json:
+              schema:
+                required:
+                  - reservations
+                properties:
+                  reservations:
+                    type: array
+                    items:                   
+                      $ref: '#/components/schemas/ReservationSchema'  
         '400':
           $ref: '#/components/responses/Error'
         '401':
