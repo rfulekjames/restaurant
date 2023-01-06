@@ -46,6 +46,7 @@ function ReservationsEditor(props) {
       <div className="container">
         <fieldset id="group1">
           <input
+            id="futureReservationsRadio"
             type="radio"
             value={FetchedReservationsTypeEnum.FUTURE}
             name="group1"
@@ -54,6 +55,7 @@ function ReservationsEditor(props) {
           />
           Future Reservations &nbsp; &nbsp; &nbsp;
           <input
+            id="pastReservationsRadio"
             type="radio"
             value={FetchedReservationsTypeEnum.PAST}
             name="group1"

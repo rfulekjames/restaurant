@@ -133,6 +133,7 @@ function ReservationForm(props) {
               <td>
                 Date:
                 <input
+                  id="dateInput"
                   ref={dateInputRef}
                   value={shownData.date}
                   onChange={changeHandler}
@@ -151,8 +152,8 @@ function ReservationForm(props) {
                 <td>
                 &nbsp;
                 <select  className="form-control" ref={amPmInputRef} name="amPm" id="amPm" value={extractAmPmFromTimeString(shownData.time)} onChange={changeHandler}>
-                  <option value="AM">AM</option>
-                  <option value="PM">PM</option>
+                  <option value="AM" id="am">AM</option>
+                  <option value="PM" id="pm">PM</option>
                 </select>
               </td>
               <td>

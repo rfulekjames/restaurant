@@ -54,6 +54,7 @@ function ReservationReportingForm(props) {
             <tr>
               <td>
                 <input
+                  id="dateInput"
                   ref={dateInputRef}
                   value={selectedDate}
                   onChange={changeDateHandler}

@@ -38,6 +38,7 @@ function Navigation() {
             {restaurantName != null && (
               <Fragment>
                 <ActivatedLiLink
+                 id={"tableLayouEditorAnchor"}
                   path={LAYOUT_EDITOR_PATH}
                   title="Table Layout Editor"
                 />

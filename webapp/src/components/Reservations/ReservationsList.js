@@ -119,6 +119,7 @@ function ReservationsList(props) {
               <td>{reservation.contactDetails}</td>
               <td>
                 <button
+                  id={`updateReservationButton${reservation.id}`}
                   className="btn btn-info btn-block"
                   onClick={(event) => updateHandler(event, reservation)}
                 >
@@ -127,6 +128,7 @@ function ReservationsList(props) {
               </td>
               <td>
                 <button
+                  id={`deleteReservationButton${reservation.id}`}
                   className="btn btn-danger  btn-block "
                   onClick={(event) => deleteHandler(event, reservation)}
                 >
