@@ -5,7 +5,7 @@ describe('registration and login', () => {
 	let user = {}
 
 	beforeEach(() => {
-		cy.visit('http://localhost:3000')
+		cy.visit('')
 	})
 
 

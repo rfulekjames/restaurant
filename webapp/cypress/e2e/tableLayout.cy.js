@@ -5,7 +5,7 @@ describe('table creation and update', () => {
 	let user = {}
 
 	beforeEach(() => {
-		cy.visit('http://localhost:3000')
+		cy.visit('')
 		if (user.username) {
 			cy.webapp.successfullLoginAndEnterRestaurant(user)
 		}
