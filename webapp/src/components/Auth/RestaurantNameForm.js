@@ -29,6 +29,7 @@ function RestaurantNameForm() {
       <div className="from-group">
         <input
           ref={restaurantNameInputRef}
+          id="restaurantNameInput"
           placeholder="Restaurant Name"
           min="2"
           max="100"
@@ -42,7 +43,7 @@ function RestaurantNameForm() {
           <tbody>
             <tr>
               <td className="align-center">
-                <button className="btn btn-success btn-block align-center">
+                <button className="btn btn-success btn-block align-center" id="enterButton">
                   Enter
                 </button>
               </td>

@@ -10,6 +10,7 @@ function Notification(props) {
       {props.message}
       {props.status === "danger" && (
         <button
+          id="dismissButton"
           className="btn btn-danger  float-right"
           onClick={notificationDismissHandler}
         >

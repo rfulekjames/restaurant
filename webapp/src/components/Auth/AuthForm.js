@@ -22,6 +22,7 @@ function AuthForm() {
       <div className="from-group">
         <input
           ref={emailInputRef}
+          id="emailInput"
           placeholder="Email Address"
           name="firstName"
           className="form-control"
@@ -34,6 +35,7 @@ function AuthForm() {
       <div className="from-group">
         <input
           ref={passwordInputRef}
+          id="passwordInput"
           className="form-control"
           placeholder="Password"
           type="password"
@@ -50,13 +52,14 @@ function AuthForm() {
               <td>
                 <div className="checkbox mb-3">
                   <h6>Do not have an account?</h6>
-                  <Link to="/registration">Register</Link> &nbsp;
+                  <Link to="/registration" id="registrationAnchor">Register</Link> &nbsp;
                 </div>
               </td>
               <td className="align-right">
                 <button
                   formAction="submit"
                   className="btn btn-success btn-block align-right"
+                  id="loginButton"
                 >
                   Login
                 </button>

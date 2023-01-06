@@ -29,8 +29,8 @@ function Navigation() {
   return (
     <Fragment>
       <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-        <Link className="navbar-brand" to="/">
-          {restaurantName && restaurantName} Restaurant Reservation
+        <Link className="navbar-brand" to="/" id="restaurantNameAnchor">
+          {restaurantName} Restaurant Reservation
         </Link>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav mr-auto">
@@ -57,7 +57,7 @@ function Navigation() {
             <Fragment>
               <ul className="navbar-nav me-auto">
                 <li className="nav-item">
-                  <Link className="nav-link" to="/">
+                  <Link className="nav-link" to="/" id="usernameAnchor">
                     {userName}
                   </Link>
                 </li>

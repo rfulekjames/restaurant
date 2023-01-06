@@ -49,6 +49,7 @@ function RegistrationForm() {
         {/* <label>Username:</label> */}
         <input
           ref={usernameInputRef}
+          id="usernameInput"
           type="text"
           placeholder="Username"
           name="name"
@@ -64,6 +65,7 @@ function RegistrationForm() {
         {/* <label>Email:</label> */}
         <input
           ref={emailInputRef}
+          id="emailInput"
           type="email"
           placeholder="Email Address"
           name="emailAddress"
@@ -77,6 +79,7 @@ function RegistrationForm() {
         {/* <label>Password:</label> */}
         <input
           ref={passwordInputRef}
+          id="passwordInput"
           className="form-control"
           placeholder="Password"
           minLength={MIN_PASSWORD_LENGTH}
@@ -90,6 +93,7 @@ function RegistrationForm() {
         {/* <label>Confirm Password:</label> */}
         <input
           ref={passwordConfirmInputRef}
+          id="password2Input"
           className="form-control"
           placeholder="Confirm Password"
           minLength={MIN_PASSWORD_LENGTH}
@@ -113,6 +117,7 @@ function RegistrationForm() {
               </td>
               <td className="align-right">
                 <button
+                  id="submitButton"
                   formAction="submit"
                   className="btn btn-success btn-block align-right"
                 >
