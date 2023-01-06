@@ -2,7 +2,7 @@
 
 - To get started run [webserver](https://github.com/rfulekjames/restaurant/tree/main/webserver) and set `SERVER_URL` in `/src/utils/server.js` to the url of the server.
 
-- Install [Node.js](nodejs.org).
+- Install [Node.js](https://nodejs.org/en/).
 
 - Run `npm install` from the root folder.
 
