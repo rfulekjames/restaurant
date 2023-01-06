@@ -1,3 +1,5 @@
+'use strict';
+
 import { validationResult } from 'express-validator';
 
 export function setFirebaseErrorResponse(res, error) {

@@ -86,6 +86,7 @@ function TableForm(props) {
               {!tableToEdit.isNewTable && (
                 <td className="align-left">
                   <button
+                    id="deleteTableButton"
                     onClick={deleteHandler}
                     className="btn btn-warning btn-block align-left"
                   >
@@ -95,6 +96,7 @@ function TableForm(props) {
               )}
               <td className="align-right">
                 <button
+                  id="setTableButton"
                   formAction="submit"
                   className="btn btn-success btn-block align-right"
                 >

@@ -6,7 +6,7 @@ export default function ActivatedLiLink(props) {
   let pathToMatch = getPathToMatch(location.pathname);
   return (
     <li className={`nav-item  ${pathToMatch === props.path ? "active" : ""}`}>
-      <Link className="nav-link" to={props.path}>
+      <Link className="nav-link" to={props.path} id={props.id}>
         {props.title}
       </Link>
     </li>

@@ -1,3 +1,5 @@
+'use strict';
+
 import express from 'express';
 import { createUser, createUsername, getUsername, login } from '../controllers/userControllers.js';
 import { body } from 'express-validator';

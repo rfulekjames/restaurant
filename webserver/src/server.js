@@ -1,3 +1,5 @@
+'use strict';
+
 import cors from 'cors';
 import express from 'express';
 import { expressjwt } from 'express-jwt';

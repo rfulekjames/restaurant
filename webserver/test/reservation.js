@@ -1,22 +1,16 @@
+'use strict';
+
 import assert from 'assert';
 import fetch from "node-fetch";
 
 import { startServer } from '../src/server.js';
-import { firebaseConfigVariables, reservationRepository } from "../src/reservation.js";
-import { connectFirestoreEmulator } from "@firebase/firestore";
-import { connectAuthEmulator } from 'firebase/auth';
+import { firebaseConfigVariables } from "../src/reservation.js";
+import { firestoreEmulatorPort, authEmulatorPort } from '../src/reservation.js';
 
 const PORT = 9000
 const SERVER_URL = `http://localhost:${PORT}/api`;
 
-export const firestoreEmulatorPort = 8080;
-export const authEmulatorPort = 9099;
 
-
-export const useTestRepository = () => {
-  connectFirestoreEmulator(reservationRepository.db, "localhost", firestoreEmulatorPort);
-  connectAuthEmulator(reservationRepository.auth, `http://localhost:${authEmulatorPort}`);
-}
 
 
 const httpHeaders = (token) => {
@@ -64,7 +58,6 @@ describe('Firestore', function () {
 
   // Called before all of the tests in this block.
   before(async function () {
-    useTestRepository();
     server = startServer(PORT);
 
     await clearDb();

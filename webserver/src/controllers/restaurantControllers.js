@@ -1,3 +1,5 @@
+'use strict';
+
 import { setFirebaseErrorResponse, validateRequest } from "../errorhandling.js";
 import { getUserId } from "../auth.js";
 import { reservationRepository } from '../reservation.js';

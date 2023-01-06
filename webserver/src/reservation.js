@@ -1,3 +1,5 @@
+'use strict';
+
 import { initializeApp } from "firebase/app";
 
 import {
@@ -21,6 +23,9 @@ import {
   writeBatch
 } from "firebase/firestore";
 
+import { connectAuthEmulator } from "firebase/auth";
+import { connectFirestoreEmulator } from "firebase/firestore";
+
 import { config } from 'dotenv';
 
 config();
@@ -40,11 +45,24 @@ export function initFirebase() {
   return [db, auth];
 }
 
+export const firestoreEmulatorPort = 8080;
+export const authEmulatorPort = 9099;
+
+export const useTestRepository = (repository) => {
+  connectFirestoreEmulator(repository.db, "localhost", firestoreEmulatorPort);
+  connectAuthEmulator(repository.auth, `http://localhost:${authEmulatorPort}`);
+}
+
+
 export class ReservationRepository {
 
   constructor(db, auth) {
     this.db = db;
     this.auth = auth;
+
+    if (process.env.ENV === 'dev') {
+      useTestRepository(this);
+    }
   }
 
   async createUser(email, password) {

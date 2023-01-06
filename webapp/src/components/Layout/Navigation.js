@@ -42,11 +42,13 @@ function Navigation() {
                   title="Table Layout Editor"
                 />
                 <ActivatedLiLink
+                  id={"reservationManagerAnchor"}
                   path={RESERVATION_MANAGEMENT_PATH}
                   title="Reservation Manager"
                   accordingToRoot={true}
                 />
                 <ActivatedLiLink
+                  id={"reservationReportingAnchor"}
                   path={RESERVATION_REPORTING_PATH}
                   title="Reservation Reporting"
                 />
