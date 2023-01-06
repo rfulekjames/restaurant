@@ -158,6 +158,7 @@ function ReservationForm(props) {
               <td>
                 Customer Name:
                 <input
+                  id="customerNameInput"
                   ref={customerNameInputRef}
                   value={shownData.customerName}
                   onChange={changeHandler}
@@ -175,6 +176,7 @@ function ReservationForm(props) {
               <td colSpan="4">
                 Contact Details:
                 <input
+                  id="contactDetailsInput"
                   ref={contactDetailsInputRef}
                   value={shownData.contactDetails}
                   onChange={changeHandler}
@@ -216,6 +218,7 @@ function ReservationForm(props) {
               )}
               <td className="align-right">
                 <button
+                  id="addReservationButton"
                   formAction="submit"
                   className="btn btn-success btn-block align-right"
                 >
