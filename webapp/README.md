@@ -10,7 +10,7 @@
 
 ### Testing
 
-Cypress tests can be run from cypress app: `npx cypress open` command, might require to install cypress [dependencies](https://docs.cypress.io/guides/continuous-integration/introduction#Dependencies).
+Tests can be run from cypress app: `npx cypress open` command, might require to install cypress [dependencies](https://docs.cypress.io/guides/continuous-integration/introduction#Dependencies).
 
 
 ## Getting Started with Create React App
