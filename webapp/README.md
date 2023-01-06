@@ -16,7 +16,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Cypress tests can be run from cypress app: `npx cypress open` command, might require to install cypress [dependencies](https://docs.cypress.io/guides/continuous-integration/introduction#Dependencies).
 
-## Available Scripts
+### Available Scripts
 
 In the project directory, run the following commmands to start the webapp in development mode:
 
