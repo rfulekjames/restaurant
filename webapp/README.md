@@ -8,12 +8,12 @@
 
 - See a walkthrough [here](https://drive.google.com/file/d/1EmYKd7T1YurApm0G61DnCXG66_7o8lcL/view?usp=sharing).
 
-# Testing
+### Testing
 
 Cypress tests can be run from cypress app: `npx cypress open` command, might require to install cypress [dependencies](https://docs.cypress.io/guides/continuous-integration/introduction#Dependencies).
 
 
-# Getting Started with Create React App
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
