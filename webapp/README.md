@@ -1,4 +1,4 @@
-# Restaurant Reservation System
+### Restaurant Reservation System
 
 - To get started run [webserver](https://github.com/rfulekjames/restaurant/tree/main/webserver) and set `SERVER_URL` in `/src/utils/server.js` to the url of the server.
 
@@ -8,13 +8,14 @@
 
 - See a walkthrough [here](https://drive.google.com/file/d/1EmYKd7T1YurApm0G61DnCXG66_7o8lcL/view?usp=sharing).
 
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-# Testing
+## Testing
 
 Cypress tests can be run from cypress app: `npx cypress open` command, might require to install cypress [dependencies](https://docs.cypress.io/guides/continuous-integration/introduction#Dependencies).
+
+
+### Getting Started with Create React App
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ### Available Scripts
 
