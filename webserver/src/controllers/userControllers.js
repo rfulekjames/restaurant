@@ -2,7 +2,6 @@
 
 import { setFirebaseErrorResponse, validateRequest } from "../errorhandling.js";
 import { getAuthToken, getUserId } from "../auth.js";
-import { ReservationService } from '../services/reservation.js';
 import { UserService } from '../services/user.js';
 
 
@@ -21,7 +20,7 @@ export const createUsername = async (req, res) => {
   if (!validateRequest(req, res)) return;
   const { username } = req.body;
   try {
-    await ReservationService.createUsername(getUserId(req), username);
+    await UserService.createUsername(getUserId(req), username);
     res.json({});
   } catch (error) {
     setFirebaseErrorResponse(res, error);
@@ -30,7 +29,7 @@ export const createUsername = async (req, res) => {
 
 export const getUsername = async (req, res) => {
   try {
-    const username = await ReservationService.getUsername(getUserId(req));
+    const username = await UserService.getUsername(getUserId(req));
     res.json({ username });
   } catch (error) {
     setFirebaseErrorResponse(res, error);

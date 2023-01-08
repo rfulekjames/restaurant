@@ -4,24 +4,8 @@ import { ReservationRepo } from "../repo.js";
 
 export class ReservationService {
 
-  static async createUsername(userId, username) {
-    await ReservationRepo.createUsername(userId, username);
-  }
-
-  static async getUsername(userId) {
-    return await ReservationRepo.getUsername(userId);
-  }
-
   static async getTables(userId, restaurantName) {
-    const tablesRaw = await ReservationRepo.getTables(userId, restaurantName);
-
-    const tables = [];
-    tablesRaw.forEach((table) => {
-        const tableToState = table.data();
-        tableToState.id = table.id;
-        tables.push(tableToState);
-    });
-    return tables;
+    return await ReservationRepo.getTables(userId, restaurantName);
   }
 
   static async createTable(tableToCreate, userId, restaurantName) {
@@ -45,35 +29,22 @@ export class ReservationService {
   }
 
   static async getReservationsForTable(restaurantName, tableId, userId, ascDesc) {
-    const reservationsRaw = await ReservationRepo.getReservationsForTable(restaurantName, tableId, userId, ascDesc);
-    const reservationsRawArray = [];
-    reservationsRaw.forEach(reservation => reservationsRawArray.push(reservation));
-    const reservations = reservationsRawArray.map(reservation => ReservationService.getReservationData(reservation));
-    return reservations;
-  }
+    return await ReservationRepo.getReservationsForTable(restaurantName, tableId, userId, ascDesc);
+  } 
 
   static async getReservationsForDate(restaurantName, date, userId) {
-    const reservationsReducer = (acc, reservation) => {
-      if (acc.length && reservation.tableId === acc[acc.length - 1][0].tableId) {
-        acc[acc.length - 1].push(reservation);
-      } else {
-        acc.push([reservation]);
-      }
-      return acc;
-    };
-
-    const reservationsRaw = await ReservationRepo.getReservationsForDate(restaurantName, date, userId);
-    const reservationsRawArray = [];
-    reservationsRaw.forEach(reservation => reservationsRawArray.push(reservation));
-    const reservations = reservationsRawArray.map(reservation => ReservationService.getReservationData(reservation));
-    const reservationsByTable = reservations.reduce(reservationsReducer, []);
+    const reservations = await ReservationRepo.getReservationsForDate(restaurantName, date, userId);
+    const reservationsByTable = reservations.reduce(ReservationService.reservationsReducer, []);
 
     return reservationsByTable;
   }
 
-  static getReservationData(reservationRaw) {
-    const reservationData = reservationRaw.data();
-    reservationData.tableId = reservationData.tableId.toString();
-    return reservationData;
-  }
+  static reservationsReducer = (acc, reservation) => {
+    if (acc.length && reservation.tableId === acc[acc.length - 1][0].tableId) {
+      acc[acc.length - 1].push(reservation);
+    } else {
+      acc.push([reservation]);
+    }
+    return acc;
+  };
 }

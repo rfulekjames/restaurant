@@ -3,10 +3,10 @@
 import assert from 'assert';
 import fetch from "node-fetch";
 
-import { startServer } from '../src/server.js';
-import { firebaseConfigVariables } from '../src/auth.js';
-import { firestoreEmulatorPort } from '../src/repo.js';
-import { authEmulatorPort } from '../src/auth.js';
+import { startServer } from '../../src/server.js';
+import { firebaseConfigVariables } from '../../src/auth.js';
+import { firestoreEmulatorPort } from '../../src/repo.js';
+import { authEmulatorPort } from '../../src/auth.js';
 
 const PORT = 9000
 const SERVER_URL = `http://localhost:${PORT}/api`;
