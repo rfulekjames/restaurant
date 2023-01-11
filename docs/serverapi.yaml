@@ -115,12 +115,8 @@ paths:
             application/json:
               schema:
                 required:
-                  - userId
                   - accessToken
                 properties:
-                  userId:
-                    type: string 
-                    example: qslYszIU3hGkXhnBA042xRHplYd3
                   accessToken:
                     type: string
                     example: >
@@ -209,12 +205,8 @@ paths:
             application/json:
               schema:
                 required:
-                  - userId
                   - accessToken
                 properties:
-                  userId:
-                    type: string 
-                    example: qslYszIU3hGkXhnBA042xRHplYd3
                   accessToken:
                     type: string
                     example: >
