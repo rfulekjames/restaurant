@@ -123,6 +123,8 @@ describe('Firestore', function () {
     body: JSON.stringify({ email, password }),
   });
 
+  const getUserIdFromAccessToken = (accToken) => JSON.parse(Buffer.from(accToken.split('.')[1], 'base64')).userId;
+
   it('login test user', async function () {
     let res = await login('test@user.org', 'secretpass');
     assert.equal(res.status, 401);
@@ -130,7 +132,8 @@ describe('Firestore', function () {
     assert.equal(res.status, 400);
     res = await login('test@user.org', 'passcorrect');
     assert.equal(res.status, 200);
-    assert.equal((await res.json()).userId, credentials.userId);
+    const userId = getUserIdFromAccessToken((await res.json()).accessToken);
+    assert.equal(userId, getUserIdFromAccessToken(accessToken));
   });
 
   const createTable = async (restarantName, tableData) => fetch(`${SERVER_URL}/restaurants/${restarantName}/tables`, {

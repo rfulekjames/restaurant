@@ -10,7 +10,7 @@ export const createUser = async (req, res) => {
   const { email, password } = req.body;
   try {
     const userCredential = await UserService.createUser(email, password);
-    res.json({ userId: userCredential.user.uid, accessToken: getAuthToken(userCredential.user.uid, email, password) });
+    res.json({ accessToken: getAuthToken(userCredential.user.uid, email, password) });
   } catch (error) {
     setFirebaseErrorResponse(res, error);
   }

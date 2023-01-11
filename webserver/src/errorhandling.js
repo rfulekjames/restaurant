@@ -6,7 +6,7 @@ export function setFirebaseErrorResponse(res, error) {
   if (error.customData?._tokenResponse) {
     const code = error.customData._tokenResponse.error.code;
     res.status(code);
-  } else if (error.code && error.code.startsWith('auth/wrong-password')) {
+  } else if (error.code && (error.code.startsWith('auth/wrong-password') || error.code.startsWith('auth/user-not-found'))) {
     res.status(401);
   } else if (error.code && error.code.startsWith('auth/too-many-requests')) {
     res.status(429);

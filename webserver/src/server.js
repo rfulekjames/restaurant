@@ -3,9 +3,9 @@
 import cors from 'cors';
 import express from 'express';
 import { expressjwt } from 'express-jwt';
-import { JWT_SECRET } from "./auth.js";
 import { restaurantRouter } from './routes/restaurantRoutes.js';
 import { userRouter } from './routes/userRoutes.js';
+import { publicKey } from './auth.js';
 
 export function startServer(port) {
 
@@ -14,9 +14,9 @@ export function startServer(port) {
   const app = express();
 
   app.use(cors(), express.json(), expressjwt({
-    algorithms: ['HS256'],
+    algorithms: ['RS256'],
     credentialsRequired: false,
-    secret: JWT_SECRET,
+    secret: publicKey,
   }));
 
   app.use('/api/users', userRouter);

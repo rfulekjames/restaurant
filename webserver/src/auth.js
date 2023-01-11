@@ -3,7 +3,6 @@
 import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
 
-
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -31,21 +30,20 @@ if (process.env.ENV === 'dev') {
   connectAuthEmulator(auth, `http://localhost:${authEmulatorPort}`);
 }
 
-const jwtSecret = process.env.JWT_SECRET;
-
-export const JWT_SECRET = Buffer.from(jwtSecret, 'base64');
+const privateKey = process.env.JWT_PRIVATE_KEY;
+export const publicKey =  process.env.JWT_PUBLIC_KEY;
 
 export function getAuthToken(userId, email, password) {
   if (email) {
-    return jwt.sign({ sub: userId, email, password }, JWT_SECRET);
+    return jwt.sign({ userId, email, password }, privateKey, { algorithm: 'RS256' });
   } else {
-    return jwt.sign({ sub: userId }, JWT_SECRET);
+    return jwt.sign({ userId }, JWT_SECRET);
   }
 }
 
 export function getUserId(req) {
   if (req.auth) {
-    return req.auth.sub;
+    return req.auth.userId;
   }
 }
 
