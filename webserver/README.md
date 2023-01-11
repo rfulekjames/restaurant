@@ -16,7 +16,7 @@ The following variables are required to be set for the web server
  `JWT_PUBLIC_KEY`
  `JWT_PRIVATE_KEY`
  
- The first two variables  `FIREBASE_API_KEY` and `PROJECT_ID` are required for making [firebase](https://firebase.google.com/) API calls, and the third and fourth one is required for verifying and signing, respectively, JWT token. see 
+ The first two variables  `FIREBASE_API_KEY` and `PROJECT_ID` are required for making [firebase](https://firebase.google.com/) API calls, and the third and fourth one is required for verifying and signing, respectively, JWT token and can be generated, e.g., as described in [key-gen-commands.txt](https://github.com/rfulekjames/restaurant/blob/main/webserver/key-gen-commands.txt)
  
  ### Testing
  
