@@ -8,6 +8,7 @@ import { reservationsActions } from "../store/reservations-slice";
 import { authActions } from "../store/auth-slice";
 import { tablesActions } from "../store/tables-slice";
 import { AUTO_LOGIN_PATH } from "../components/Layout/Navigation";
+import { Buffer } from "buffer";
 
 
 import { getAccessTokenFromSessionStorage, setAccessTokenInSessionStorage } from "./window-methods";
@@ -79,11 +80,12 @@ export const createUser = async (userToCreate, history, dispatch) => {
 export const authenticateUser = async (userToAuth, dispatch) => {
   showPendingNotification(dispatch, "Sending user data!");
   try {
-    const { userId, accessToken } = await executeServerRequest(LOGIN_PATH, 'POST', { email: userToAuth.email, password: userToAuth.password });
+    const { accessToken } = await executeServerRequest(LOGIN_PATH, 'POST', { email: userToAuth.email, password: userToAuth.password });
+    const payload = JSON.parse(Buffer.from(accessToken.split('.')[1], 'base64'));
     setAccessTokenInSessionStorage(accessToken);
     if (await fetchUsernameIfNeededAndUpdateAuthState(
       userToAuth,
-      userId,
+      payload.userId,
       dispatch,
     )) showSuccessNotification(dispatch, "User logged in successfully!");
   } catch (error) {
