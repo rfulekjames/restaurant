@@ -18,8 +18,8 @@ export const authEmulatorPort = 9099;
 config();
 
 export const firebaseConfigVariables = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  projectId: process.env.PROJECT_ID,
+  apiKey: process.env.FIREBASE_API_KEY ? process.env.FIREBASE_API_KEY : 'Fake-Api-Key',
+  projectId: process.env.PROJECT_ID ? process.env.PROJECT_ID : 'test',
 };
 
 initializeApp(firebaseConfigVariables);
@@ -30,15 +30,11 @@ if (process.env.ENV === 'dev') {
   connectAuthEmulator(auth, `http://localhost:${authEmulatorPort}`);
 }
 
-const privateKey = process.env.JWT_PRIVATE_KEY;
-export const publicKey =  process.env.JWT_PUBLIC_KEY;
+const privateKey =  process.env.JWT_PRIVATE_KEY;
+export const publicKey = process.env.JWT_PUBLIC_KEY;
 
 export function getAuthToken(userId, email, password) {
-  if (email) {
-    return jwt.sign({ userId, email, password }, privateKey, { algorithm: 'RS256' });
-  } else {
-    return jwt.sign({ userId }, JWT_SECRET);
-  }
+  return jwt.sign({ userId, email, password }, privateKey, { algorithm: 'RS256' });
 }
 
 export function getUserId(req) {

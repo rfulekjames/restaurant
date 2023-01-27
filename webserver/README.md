@@ -20,10 +20,15 @@ The following variables are required to be set for the web server
  
  ### Testing
  
- 0. Install and configure [firebase emulators](https://firebase.google.com/docs/emulator-suite/install_and_configure). Only, *firestore* and *auth* emulators are needed.
+ 0. Install and configure [firebase emulators](https://firebase.google.com/docs/emulator-suite/install_and_configure). Only, *firestore* and *auth* emulators are needed, e.g., run `npm install -g firebase-tools`
 
- 1. Start [firebase emulators](https://firebase.google.com/docs/emulator-suite) by `firebase emulators:start` command from the root folder.
+ 1. Start [firebase emulators](https://firebase.google.com/docs/emulator-suite) by `firebase emulators:start --project test` command from the root folder.
+
+ 2. Install mocha `npm install -g mocha`
  
- 1. Run `mocha test --exit` from the root folder.
+ 3. Run `mocha ./test/* --exit` from the root folder.
+ 
+The command `firebase emulators:exec --project test "mocha ./test/* --exit"` will run the tests and takes care of starting and stopping emulators.
+
 
 Edit [`firebase.json`](https://github.com/rfulekjames/restaurant/blob/main/webserver/firebase.json) to change the emulators settings.
