@@ -28,6 +28,8 @@ The following variables are required to be set for the web server
  
  3. Run `mocha ./test/* --exit` from the root folder.
  
+ 4. Set `ENV` environment variable to `dev`.
+ 
 The command `firebase emulators:exec --project test "mocha ./test/* --exit"` will run the tests and takes care of starting and stopping emulators.
 
 
