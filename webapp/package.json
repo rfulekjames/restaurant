@@ -6,9 +6,7 @@
   "dependencies": {
     "@openapitools/openapi-generator-cli": "^2.5.2",
     "@reduxjs/toolkit": "^1.6.1",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
+    "cypress": "^12.5.1",
     "install": "^0.13.0",
     "npm": "^9.2.0",
     "react": "^17.0.2",

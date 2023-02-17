@@ -17,6 +17,7 @@
     "express-validator": "^6.14.2",
     "firebase": "^9.15.0",
     "jsonwebtoken": "^9.0.0",
+    "kill-port": "^2.0.1",
     "node-fetch": "^3.3.0"
   },
   "devDependencies": {
