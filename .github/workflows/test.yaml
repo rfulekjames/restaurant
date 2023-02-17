@@ -34,6 +34,9 @@ jobs:
         run: |
           cd webapp
           npm install
+          cd ..
+          cd webserver
+          firebase emulators:exec --project test "node startserver" & cd ..
       - name: e2e tests
         uses: cypress-io/github-action@v5
         env:
@@ -42,9 +45,7 @@ jobs:
           ENV: dev
         with:
           working-directory: ./webapp
-          start: |
-            cd webserver
-            firebase emulators:exec --project test "node startserver & cd .. && cd webapp && npm run build && npm start"
+          start: npm start
           wait-on: 'http://localhost:3000'
           browser: chrome
           
