@@ -13,7 +13,8 @@ jobs:
           node-version: 14
       - name: Install backend dependencies
         run: |
-          apt install -y default-jre
+          apt-get update
+          apt-get install -y default-jre
           cd webserver
           npm install
           npm install -g firebase-tools
