@@ -30,17 +30,19 @@ jobs:
           npm install
       - name: e2e tests
         env:
+          uses: cypress-io/github-action@v5
           JWT_PRIVATE_KEY: ${{ vars.DUMMY_RSA_PRIVATE_KEY }}
           JWT_PUBLIC_KEY: ${{ vars.DUMMY_RSA_PUBLIC_KEY }}
           ENV: dev
-        uses: cypress-io/github-action@v5
+        working-directory: ./webapp
         with:
           start: |
+            cd ..
             cd webserver
             firebase emulators:exec --project test "node startserver & cd .. && cd webapp && npm start"
           wait-on: 'http://localhost:3000'
-          spec: webapp/cypress/e2e/*
           browser: chrome
+          
       - name: Stop
         run: | 
           cd webserver
