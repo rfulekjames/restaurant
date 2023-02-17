@@ -28,7 +28,7 @@ const httpHeaders = (token) => {
 
 async function clearDb() {
   const response = await fetch(
-    `http://localhost:${firestoreEmulatorPort}/emulator/v1/projects/${firebaseConfigVariables.projectId}/databases/(default)/documents`,
+    `http://127.0.0.1:${firestoreEmulatorPort}/emulator/v1/projects/${firebaseConfigVariables.projectId}/databases/(default)/documents`,
     {
       method: 'DELETE',
     }
@@ -40,7 +40,7 @@ async function clearDb() {
 
 async function clearAuth() {
   const response = await fetch(
-    `http://localhost:${authEmulatorPort}/emulator/v1/projects/${firebaseConfigVariables.projectId}/accounts`,
+    `http://127.0.0.1:${authEmulatorPort}/emulator/v1/projects/${firebaseConfigVariables.projectId}/accounts`,
     {
       method: 'DELETE',
     }

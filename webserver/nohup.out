@@ -1,0 +1,3 @@
+WARNING: You are using the Auth Emulator, which is intended for local testing only.  Do not use with production credentials.
+Server running on port 9000
+Api endpoint: hostname:9000/api

@@ -27,7 +27,7 @@ initializeApp(firebaseConfigVariables);
 const auth = getAuth();
 
 if (process.env.ENV === 'dev') {
-  connectAuthEmulator(auth, `http://localhost:${authEmulatorPort}`);
+  connectAuthEmulator(auth, `http://127.0.0.1:${authEmulatorPort}`);
 }
 
 const privateKey =  process.env.JWT_PRIVATE_KEY;
