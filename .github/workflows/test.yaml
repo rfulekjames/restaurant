@@ -29,6 +29,7 @@ jobs:
           cd webapp
           npm install
       - name: e2e tests
+        uses: cypress-io/github-action@v5
         env:
           uses: cypress-io/github-action@v5
           JWT_PRIVATE_KEY: ${{ vars.DUMMY_RSA_PRIVATE_KEY }}
