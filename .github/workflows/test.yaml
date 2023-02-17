@@ -41,11 +41,9 @@ jobs:
           JWT_PUBLIC_KEY: ${{ vars.DUMMY_RSA_PUBLIC_KEY }}
           ENV: dev
         with:
+          working-directory: ./webapp
           start: |
-            cd ..
-            cd webserver
-            firebase emulators:exec --project test "node startserver & cd .. && cd webapp && npm run build && npm start"
+            ../webserver/firebase emulators:exec --project test "../webserver/node startserver & npm run build && npm start"
           wait-on: 'http://localhost:3000'
           browser: chrome
-          working-directory: ./webapp
           
