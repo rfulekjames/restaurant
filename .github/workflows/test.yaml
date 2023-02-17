@@ -11,11 +11,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 14
-      # - name: Set up JDK 17
-      #   uses: actions/setup-java@v3
-      #   with:
-      #     java-version: '17'
-      #     distribution: 'temurin'
       - name: Install backend dependencies
         run: |
           cd webserver
@@ -31,14 +26,15 @@ jobs:
       #     cd webserver
       #     firebase emulators:exec --project test "mocha ./test/* --exit"
       - name: Install frontend dependencies
+        run: |
+          cd webapp
+          npm install
+      - name: Run server
         env:
           JWT_PRIVATE_KEY: ${{ vars.DUMMY_RSA_PRIVATE_KEY }}
           JWT_PUBLIC_KEY: ${{ vars.DUMMY_RSA_PUBLIC_KEY }}
           ENV: dev
-        run: |
-          cd webapp
-          npm install
-          cd ..
+        run: | 
           cd webserver
           firebase emulators:exec --project test "node startserver" & cd ..
       - name: e2e tests
@@ -47,5 +43,5 @@ jobs:
           working-directory: ./webapp
           start: npm start
           wait-on: 'http://localhost:3000'
-          browser: chrome
+          browser: firefox
           
