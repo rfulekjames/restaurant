@@ -3,6 +3,7 @@ on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
+    container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
       - name: Get code
         uses: actions/checkout@v3
@@ -43,8 +44,3 @@ jobs:
           browser: chrome
           working-directory: ./webapp
           
-      - name: Stop
-        run: | 
-          cd webserver
-          npx kill-port 3000, 9000, 4400, 8080, 9099
-        
